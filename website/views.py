@@ -142,6 +142,10 @@ def delete_daily(id):
     
     return redirect(url_for("views.dashboard", username=user.username))
 
+@views.route("/dashboard")
+@login_required
+def dashboard_main():
+    return redirect(url_for("views.dashboard", username=current_user.username))
 
 @views.route("/dashboard/<username>")
 @login_required
@@ -153,7 +157,6 @@ def dashboard(username):
         return redirect(url_for("views.home"))
     elif current_user.permission_level < 1 and current_user.id != user.id:
         flash("You can't view other's dashboard!", category="error")
-        return redirect(url_for("views.home"))
 
     return render_template("dashboard.html", current_user=current_user, hobbies=user.hobbies, dailies=user.dailies, tickets=user.tickets)
 

@@ -2,8 +2,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager, current_user
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
 from werkzeug.security import generate_password_hash
 import datetime
 
@@ -29,15 +27,6 @@ def create_app():
     login_manager = LoginManager()
     login_manager.login_view = "auth.login"
     login_manager.init_app(app)
-
-    class MyModelView(ModelView):
-        def is_accessible(self):
-            return current_user.permission_level == 3
-
-    admin = Admin(app)
-    admin.add_view(MyModelView(User, db.session))
-    admin.add_view(MyModelView(Daily, db.session))
-    admin.add_view(MyModelView(Hobby, db.session))
 
     @login_manager.user_loader
     def load_user(id):

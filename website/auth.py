@@ -20,7 +20,7 @@ def login():
             if check_password_hash(user.password, password):
                 login_user(user, remember=True)
                 flash("Logged in successfully!", category="success")
-                return redirect(url_for("views.home"))
+                return redirect(url_for("views.dashboard", username=user.username))
             else:
                 flash("Password is incorrect!", category="error")
         else:
@@ -91,5 +91,6 @@ def sign_up():
 @login_required
 def logout():
     logout_user()
+    flash("Successfully logged out!", category="success")
     return redirect(url_for("views.home"))
 
