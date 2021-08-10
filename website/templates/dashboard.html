@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class='main'>
+<<<<<<< HEAD
     <div class="dashboard-submain-1">
         <p class="para">
             {{user.username}}
@@ -8,6 +9,26 @@
         <button type="button" class="dashboard-btn" onclick="location.href = '/dashboard';">
             Dashboard
         </button>
+=======
+    <div class="submain-1" align="center">
+        <h1 align="center">
+            {{user.username}}
+        </h1>
+        <br/>
+        <div class="submain-2">
+            <div class="hobby form-group" style="float: left;">
+                <form method="POST" style="display:flex; flex-direction:row; padding:2px;">
+                    <input type="text" id="text" name="text" class="form-control input100" placeholder="Add Hobby" style="width:105%; flex-grow:2;"/>
+                    <a href="#"><button class="btn btn-primary" type="submit">
+                        +
+                    </button></a>
+                </form>
+            </div>
+            <div class="daily" style="float: right;">
+                B
+            </div>
+        </div>
+>>>>>>> 57118d2336518f3673fe6988b10edb9abf1195a2
     </div>
 </div>
 {% endblock %}
