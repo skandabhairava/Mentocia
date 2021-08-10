@@ -121,6 +121,19 @@ nav{
     padding: 20px;
 }
 
+.card-item{
+    text-align: center;
+	font-size: 18px;
+	padding: 20px;
+	list-style-position: inside;
+    list-style-type: none;
+}
+
+.list-text{
+    padding:1rem;
+}
+
+
 @media screen and (max-width: 200px) {
     .submain-1{
         font-size: 0.4rem;
