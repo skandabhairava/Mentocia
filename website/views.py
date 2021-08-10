@@ -159,11 +159,7 @@ def dashboard(username):
         flash("You can't view other's dashboard!", category="error")
         return redirect(url_for("views.dashboard", username=current_user.username))
 
-<<<<<<< HEAD
-    return render_template("dashboard.html", current_user=current_user,hobbies=user.hobbies, dailies=user.dailies, tickets=user.tickets)
-=======
     return render_template("dashboard.html", current_user=current_user, user=user, hobbies=user.hobbies, dailies=user.dailies, tickets=user.tickets)
->>>>>>> 57118d2336518f3673fe6988b10edb9abf1195a2
 
 @views.route("/toggle-daily/<id>", methods=["POST"])
 @login_required
