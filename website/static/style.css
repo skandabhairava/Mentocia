@@ -34,7 +34,7 @@
     text-decoration: none;
 }
 
-.form-group{
+.auth-input{
     background-color: #6640a3;
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
@@ -58,7 +58,7 @@
     margin-top: 30px;
 }
 
-.btn{
+.auth-button{
     width: 180px;
     padding: 20px;
 }
