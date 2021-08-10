@@ -44,7 +44,7 @@
     border-radius: 2rem;
 
     position: absolute;
-    top: 50%;
+    top: 53%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
@@ -77,4 +77,20 @@
 body {
     background-image: url("/static/background.svg");
     background-size: 100% auto;
+}
+
+/* TEST */
+
+.input100 {
+    font-size: 16px;
+    color: #000000;
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+    height: 55px;
+    padding: 0 20px 0 23px;
+}
+
+.input100:focus {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
