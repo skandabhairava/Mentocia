@@ -8,12 +8,16 @@
 }
 
 .submain-1{
-    padding-top: 6rem;
-    padding-left: 10rem;
-    padding-right: 10rem;
+    padding: 5rem;
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     font-size: 1.4rem;
+    border-radius: 10px;
+    background-color: white;
+    position: absolute;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .dashboard-btn{
@@ -69,6 +73,7 @@
     }
 
     .dashboard-btn{
+        font-size: 0.3rem;
         width: 100px;
         padding: 10px;
     }

@@ -158,7 +158,7 @@ def dashboard(username):
     elif current_user.permission_level < 1 and current_user.id != user.id:
         flash("You can't view other's dashboard!", category="error")
 
-    return render_template("dashboard.html", current_user=current_user, hobbies=user.hobbies, dailies=user.dailies, tickets=user.tickets)
+    return render_template("dashboard.html", current_user=current_user,hobbies=user.hobbies, dailies=user.dailies, tickets=user.tickets)
 
 @views.route("/toggle-daily/<id>", methods=["POST"])
 @login_required
