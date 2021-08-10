@@ -4,6 +4,7 @@ from flask_login import login_required, current_user
 from .models import User, Hobby, Daily, Post, Comment
 from sqlalchemy import not_
 from . import db
+from sqlalchemy.orm.attributes import flag_modified
 import requests
 
 views = Blueprint("views", __name__)
@@ -47,7 +48,7 @@ def create_hobby(username):
     """
     user = User.query.filter_by(username=username).first()
     text = request.form.get('text')
-    price = request.form.get('price')
+    price = "3"
     if current_user.permission_level < 2 and current_user.username != username:
         flash("You cannot create a hobby for someone else!", category="error")
         return redirect(url_for("views.dashboard", username=current_user.username))
@@ -69,7 +70,7 @@ def create_hobby(username):
 
     return redirect(url_for("views.dashboard", username=user.username))
 
-@views.route("/delete-hobby/<id>", methods=["POST"])
+@views.route("/delete-hobby/<id>")
 @login_required
 def delete_hobby(id):
     """
@@ -95,7 +96,7 @@ def delete_hobby(id):
 def create_daily(username):
     user = User.query.filter_by(username=username).first()
     text = request.form.get('text')
-    price = request.form.get('price')
+    price = "8"
 
     if current_user.permission_level < 2 and current_user.username != username:
         flash("You cannot create a hobby for someone else!", category="error")
@@ -118,7 +119,7 @@ def create_daily(username):
 
     return redirect(url_for("views.dashboard", username=user.username))
 
-@views.route("/delete-daily/<id>/", methods=["POST"])
+@views.route("/delete-daily/<id>/")
 @login_required
 def delete_daily(id):
     daily = Daily.query.filter_by(id=id).first()
@@ -162,7 +163,7 @@ def dashboard(username):
 
     return render_template("dashboard.html", current_user=current_user, user=user, hobbies=user.hobbies, dailies=user.dailies, tickets=user.tickets, quote=a["q"], author=a["a"])
 
-@views.route("/toggle-daily/<id>", methods=["POST"])
+@views.route("/toggle-daily/<id>")
 @login_required
 def toggle_daily(id):
     daily = Daily.query.filter_by(id=id).first()
@@ -171,7 +172,7 @@ def toggle_daily(id):
         flash("Cannot find specified daily task!", category="error")
         return redirect(url_for("views.dashboard", username=current_user.username))
 
-    user = daily.user
+    user = User.query.filter_by(id=daily.author).first()
 
     if current_user.permission_level < 2 and current_user.id != user.id:
         flash("You do not have permission to change others daily!", category="error")
@@ -179,18 +180,21 @@ def toggle_daily(id):
     elif daily.checked:
         flash(f"Unchecked {daily.text}!", category="success")
         user.tickets -= daily.price
+        daily.checked = not daily.checked
+        db.session.commit()
         flash(f"Lost {daily.price} tickets!", category="error")
     elif not daily.checked:
         flash(f"Checked {daily.text}!", category="success")
         user.tickets += daily.price
-        flash(f"Gained {daily.price} tickets!", category="success")
-    else:
         daily.checked = not daily.checked
         db.session.commit()
+        flash(f"Gained {daily.price} tickets!", category="success")
+    else:
+        print("I dont know how you got here")
 
     return redirect(url_for("views.dashboard", username=user.username))
 
-@views.route("/toggle-hobby/<id>", methods=["POST"])
+@views.route("/toggle-hobby/<id>")
 @login_required
 def toggle_hobby(id):
     hobby = Hobby.query.filter_by(id=id).first()
@@ -199,7 +203,7 @@ def toggle_hobby(id):
         flash("Cannot find specified hobby task!", category="error")
         return redirect(url_for("views.dashboard", username=current_user.username))
 
-    user = hobby.user
+    user = User.query.filter_by(id=hobby.author).first()
 
     if current_user.permission_level < 2 and current_user.id != user.id:
         flash("You do not have permission to change others hobby!", category="error")
@@ -207,14 +211,17 @@ def toggle_hobby(id):
     elif hobby.checked:
         flash(f"Unchecked {hobby.text}!", category="success")
         user.tickets -= hobby.price
+        hobby.checked = not hobby.checked
+        db.session.commit()
         flash(f"Lost {hobby.price} tickets!", category="error")
     elif not hobby.checked:
         flash(f"Checked {hobby.text}!", category="success")
         user.tickets += hobby.price
-        flash(f"Gained {hobby.price} tickets!", category="success")
-    else:
         hobby.checked = not hobby.checked
         db.session.commit()
+        flash(f"Gained {hobby.price} tickets!", category="success")
+    else:
+        print("I dont know how you got here")
 
     return redirect(url_for("views.dashboard", username=user.username))
 

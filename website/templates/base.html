@@ -124,6 +124,24 @@
             }
         });
     </script>
+    <script>
+        $(".daily-check").change(function() {
+            if(this.checked) {
+                window.location.href = "/toggle-daily/" + $(this).attr('dailyid');
+            }
+            if(!this.checked) {
+                window.location.href = "/toggle-daily/" + $(this).attr('dailyid');
+            }
+        });
+        $(".hobby-check").change(function() {
+            if(this.checked) {
+                window.location.href = "/toggle-hobby/" + $(this).attr('hobbyid');
+            }
+            if(!this.checked) {
+                window.location.href = "/toggle-hobby/" + $(this).attr('hobbyid');
+            }
+        });
+    </script>
 
 </body>
 </html>

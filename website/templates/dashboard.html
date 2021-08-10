@@ -11,32 +11,40 @@
         <div class="flexbox-main">
             <div class="submain-2">
                 <div class="daily form-group" style="float: left;">
-                    <form method="POST" style="display:flex; flex-direction:row; padding:2px;">
+                    <form method="POST" style="display:flex; flex-direction:row; padding:2px;" action="/create-daily/{{user.username}}">
                         <input type="text" id="text" name="text" class="form-control input100" placeholder="Daily task" style="width:20%; flex-grow:2;"/>
-                        <a href="/dashboard"><button class="btn btn-primary" type="submit">
+                        <button class="btn btn-primary" type="submit">
                             +
-                        </button></a>
+                        </button>
                     </form>
                     <ul class="card-item">
-                        <li><input type="checkbox"><span class="list-text">whatever</span> <span class="prize">🏆</span></li>
-                        <li><input type="checkbox"><span class="list-text">whatever</span> <span class="prize">🏆</span></li>
+                        {% for daily in dailies %}
+                        <li><input type="checkbox" id="check" class="daily-check" dailyid={{daily.id}}
+                            {% if daily.checked == True %}
+                            checked="checked"
+                            {% endif %}
+                            ><span class="list-text">{{daily.text}}</span><span class="prize">🏆{{daily.price}}🏆</span><a href="/delete-daily/{{daily.id}}"><button class="btn btn-primary">Delete</button></a></li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
     
             <div class="submain-3">
                 <div class="hobby form-group" style="float: left;">
-                    <form method="POST" style="display:flex; flex-direction:row; padding:2px;">
+                    <form method="POST" style="display:flex; flex-direction:row; padding:2px;" action="/create-hobby/{{user.username}}">
                         <input type="text" id="text" name="text" class="form-control input100" placeholder="Add Hobby" style="width:105%; flex-grow:2;"/>
-                        <a href="#"><button class="btn btn-primary" type="submit">
+                        <button class="btn btn-primary" type="submit">
                             +
                         </button></a>
                     </form>
                     <ul class="card-item">
-                        <li type="checkbox">
-                            <li><input type="checkbox"><span class="list-text">whatever</span> <span class="prize"></span>🏆</span></li>
-                            <li><input type="checkbox"><span class="list-text">whatever</span> <span class="prize">🏆</span></li>
-                        </li>
+                        {% for hobby in hobbies %}
+                        <li><input type="checkbox" id="check" class="hobby-check" hobbyid={{hobby.id}}
+                            {% if hobby.checked == True %}
+                            checked="checked"
+                            {% endif %}
+                            ><span class="list-text">{{hobby.text}}</span><span class="prize">🏆{{hobby.price}}🏆</span><a href="/delete-hobby/{{hobby.id}}"><button class="btn btn-primary">Delete</button></a></li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
