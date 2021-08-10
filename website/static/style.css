@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap');
 
-.body{
-    background: linear-gradient(30deg, rgba(0,0,0,1) 0%, rgba(57,57,111,1) 47%, rgba(255,255,255,1) 100%); 
-}
 
 .nav-item{
     font-family: 'Poppins', sans-serif;
