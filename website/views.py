@@ -1,6 +1,8 @@
+from operator import not_
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .models import User, Hobby, Daily
+from .models import User, Hobby, Daily, Post, Comment
+from sqlalchemy import not_
 from . import db
 import requests
 
@@ -16,8 +18,17 @@ def _to_int(string:str) -> int :
         string = 0
     return string
 
+def _to_bool(string:str) -> bool :
+    """
+    string:str -> takes in a given string and tries to convert it into a boolean, if not, returns False
+    """
+    try:
+        return string.lower() in ("true", "yes", "t", "1")
+    except Exception:
+        return False
+
 ##############################################################
-## FLASK VIEWS
+## FLASK VIEWS FOR DASHBOARD
 ##############################################################
 
 @views.route("/")
@@ -40,7 +51,7 @@ def create_hobby(username):
     user = User.query.filter_by(username=username).first()
     text = request.form.get('text')
     price = request.form.get('price')
-    if current_user.permission_level < 3 and current_user.username != username:
+    if current_user.permission_level < 2 and current_user.username != username:
         flash("You cannot create a hobby for someone else!", category="error")
         return redirect(url_for("views.dashboard", username=current_user.username))
     elif not text:
@@ -72,7 +83,7 @@ def delete_hobby(id):
     
     if not hobby:
         flash("Cannot delete, non-existant hobby!", category="error")
-    elif current_user.permission_level < 3 and current_user.id != user.id:
+    elif current_user.permission_level < 2 and current_user.id != user.id:
         flash("You do not have permission to delete this hobby!", category="error")
         return redirect(url_for("views.dashboard", username=current_user.username))
     else:
@@ -89,7 +100,7 @@ def create_daily(username):
     text = request.form.get('text')
     price = request.form.get('price')
 
-    if current_user.permission_level < 3 and current_user.username != username:
+    if current_user.permission_level < 2 and current_user.username != username:
         flash("You cannot create a hobby for someone else!", category="error")
         return redirect(url_for("views.dashboard", username=current_user.username))
     elif not text:
@@ -117,7 +128,7 @@ def delete_daily(id):
     user = daily.user
     if not daily:
         flash("Cannot delete, non-existant daily task!", category="error")
-    elif current_user.permission_level < 3 and current_user.id != user.id:
+    elif current_user.permission_level < 2 and current_user.id != user.id:
         flash("You do not have permission to delete this hobby!", category="error")
         return redirect(url_for("views.dashboard", username=current_user.username))
     elif not user:
@@ -140,7 +151,7 @@ def dashboard(username):
     if not user:
         flash("No user with that username exists!", category="error")
         return redirect(url_for("views.home"))
-    elif current_user.permission_level < 2 and current_user.id != user.id:
+    elif current_user.permission_level < 1 and current_user.id != user.id:
         flash("You can't view other's dashboard!", category="error")
         return redirect(url_for("views.home"))
 
@@ -157,7 +168,7 @@ def toggle_daily(id):
 
     user = daily.user
 
-    if current_user.permission_level < 3 and current_user.id != user.id:
+    if current_user.permission_level < 2 and current_user.id != user.id:
         flash("You do not have permission to change others daily!", category="error")
         return redirect(url_for("views.dashboard", username=current_user.username))
     elif daily.checked:
@@ -185,7 +196,7 @@ def toggle_hobby(id):
 
     user = hobby.user
 
-    if current_user.permission_level < 3 and current_user.id != user.id:
+    if current_user.permission_level < 2 and current_user.id != user.id:
         flash("You do not have permission to change others hobby!", category="error")
         return redirect(url_for("views.dashboard", username=current_user.username))
     elif hobby.checked:
@@ -201,4 +212,99 @@ def toggle_hobby(id):
         db.session.commit()
 
     return redirect(url_for("views.dashboard", username=user.username))
+
+##############################################################
+## FLASK VIEWS FOR FORUM
+##############################################################
+
+@views.route("/forum")
+@login_required
+def forum():
+    if current_user.permission_level == 1:
+        posts = Post.query.filter(Post.severity != False).all()[::-1]
+    else:
+        posts = Post.query.all()[::-1]
+    return render_template("home.html", current_user=current_user, posts=posts)
+
+@views.route("/create-post", methods=["GET", "POST"])
+@login_required
+def create_post():
+    if request.method == "POST":
+        text = request.form.get('text')
+        severity = request.form.get('severity')
+        if not text:
+            flash("Post cannot be empty!", category="error")
+        elif not severity:
+            flash("Severity value cannot be empty!", category="error")
+        elif len(text) > 200:
+            flash("Title/Post is too long!", category="error")
+        else:
+            post = Post(text=text, severity=_to_bool(severity), author=current_user.id)
+            db.session.add(post)
+            db.session.commit()
+            flash("Post created!", category="success")
+            return redirect(url_for("views.forum"))
+
+    return render_template('create_post.html', current_user=current_user)
+
+@views.route("/delete-post/<id>")
+@login_required
+def delete_post(id):
+    post = Post.query.filter_by(id=id).first()
+
+    if not post:
+        flash("Post does not exist!", category="error")
+    elif current_user.permission_level < 1 and current_user.id != post.user.id:
+        flash("You can't delete others posts!", category="error")
+        return redirect(url_for("views.forum"))
+    else:
+        db.session.delete(post)
+        db.session.commit()
+        flash("Post has been deleted successfully!", category="success")
     
+    return redirect(url_for("views.home"))
+
+@views.route("/create-comment/<id>", methods=['POST'])
+@login_required
+def create_comment(id):
+    post = Post.query.filter_by(id=id).first()
+    text = request.form.get('text')
+    if not post:
+        flash("No such Post exists", category="error")
+    elif not text:
+        flash("Comment cannot be empty", category="error")
+    else:
+        comment = Comment(text=text, author=current_user.id, post_id=id)
+        db.session.add(comment)
+        db.session.commit()
+        flash("Comment has been posted!", category="success")
+
+    return redirect(url_for("views.view_single_post", id=id))
+
+@views.route("/delete-comment/<id>")
+@login_required
+def delete_comment(id):
+    comment = Comment.query.filter_by(id=id).first()
+
+    if not comment:
+        flash("Comment does not exist!", category="error")
+    elif current_user.permission_level < 1 and current_user.id != comment.user.id:
+        flash("You can't delete others comments!", category="error")
+    else:
+        url_redirect = url_for("views.view_single_post", id=comment.post.id)
+        db.session.delete(comment)
+        db.session.commit()
+        flash("Comment has been deleted successfully!", category="success")
+    
+    return redirect(url_redirect)
+
+@views.route("/post/<id>")
+@login_required
+def view_single_post(id):
+    post = Post.query.filter_by(id=id).first()
+
+    if not post:
+        flash("No such Post exists", category="error")
+        return redirect(url_for("views.forum"))
+
+    return render_template("single_post.html", post=post, current_user=current_user)
