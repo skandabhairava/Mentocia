@@ -157,6 +157,7 @@ def dashboard(username):
         return redirect(url_for("views.home"))
     elif current_user.permission_level < 1 and current_user.id != user.id:
         flash("You can't view other's dashboard!", category="error")
+        return redirect(url_for("views.dashboard", username=current_user.username))
 
     return render_template("dashboard.html", current_user=current_user, user=user, hobbies=user.hobbies, dailies=user.dailies, tickets=user.tickets)
 
