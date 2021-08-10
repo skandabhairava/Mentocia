@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}{{post.title}}{% endblock %}
+{% block content %}
+<h1 align="center">{{post.title}}</h1>
+<div class="card border-dark">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h2 class="card-title">{{post.title}}</h2>
+    </div>
+    <div class="card-body">
+        <div class="card-text"><h6 class="card-text">{{post.text}}</h6></div>
+    </div>
+    <div class="card-footer text-muted" style="height: 3;">
+        <div align="left" style="float:left;">
+            <a href="/user/{{post.user.username}}/posts">{{post.user.username}}</a>
+        </div>
+        <div align="right" style="float:right;">
+        {{post.date_created}}
+        {% if user.id == post.author %}
+        <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
+            <ul class="dropdown-menu">
+                <li><a href="/delete-post/{{post.id}}" class="dropdown-item">Delete</a></li>
+            </ul>
+        </div>
+        {% endif %}
+        </div>
+    </div>
+</div>
+</br>
+<div class="card border-dark">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="card-title">Comments</h5>
+    </div>
+    <div class="card-body">
+        <div class="card-text">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item p-3">
+                    <form method="POST" class="mb-3" action="/create-comment/{{post.id}}">
+                        <div>
+                            <textarea class="form-control d-flex autoresizing" maxlength="200" wrap="off" name="text" id="text" placeholder="Leave a comment here" style="height: 100px; display: block; overflow: hidden; resize: none;"></textarea>
+                        </div>
+                        <div align="right">
+                            <label class="text-max-len text-muted">500 / 500</label>
+                        </div>
+                        <br/>
+                        <div align="right">
+                            <button type="submit" class="btn btn-lg btn-primary">Comment</button>
+                        </div>
+                    </form>
+                </li>
+                {% for comment in post.comments %}
+                <li class="list-group-item">
+                    <div style="float: left;">
+                        <div>
+                            <a href="/user/{{post.user.username}}/posts">{{comment.user.username}}</a>
+                        </div>
+                        <div>
+                            <p>&emsp;{{comment.text}}</p>
+                        </div>
+                    </div>
+                    {% if user.id == comment.author %}
+                        <div style="float: right;" class="btn-group dropdown">
+                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
+                            <ul class="dropdown-menu">
+                                <li class="list-group-item"><a href="/delete-comment/{{comment.id}}" class="dropdown-item">Delete</a></li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
