@@ -229,7 +229,7 @@ def forum():
         posts = Post.query.filter(Post.severity != False).all()[::-1]
     else:
         posts = Post.query.all()[::-1]
-    return render_template("home.html", current_user=current_user, posts=posts)
+    return render_template("post_div.html", current_user=current_user, posts=posts)
 
 @views.route("/create-post", methods=["GET", "POST"])
 @login_required
