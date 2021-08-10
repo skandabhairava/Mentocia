@@ -4,19 +4,24 @@
     <div class="dashboard-submain-1" align="center">
         <h1 align="center">
             {{user.username}}
-            <p class="motivational">"motivational quote here"</p>
+            <p class="motivational">"{{quote}}" - {{author}}</p>
             <p class="tickets">tickets: {{user.tickets}}</p>
         </h1>
         <br/>
         <div class="flexbox-main">
             <div class="submain-2">
-                <div class="hobby form-group" style="float: left;">
+                <div class="daily form-group" style="float: left;">
                     <form method="POST" style="display:flex; flex-direction:row; padding:2px;">
                         <input type="text" id="text" name="text" class="form-control input100" placeholder="Daily task" style="width:105%; flex-grow:2;"/>
                         <a href="#"><button class="btn btn-primary" type="submit">
                             +
                         </button></a>
                     </form>
+                    <ul class="card-item">
+                        <li>
+                            stuff
+                        </li>
+                    </ul>
                 </div>
             </div>
     

@@ -37,10 +37,7 @@ def home():
     """
     Main homepage of the website
     """
-    url = "https://zenquotes.io/api/random"
-    response = requests.get(url)
-    a = response.json()[0]
-    return render_template("home.html", current_user=current_user, quote=a["q"], author=["a"])
+    return render_template("home.html", current_user=current_user)
 
 @views.route("/create-hobby/<username>", methods=["POST"])
 @login_required
@@ -158,8 +155,12 @@ def dashboard(username):
     elif current_user.permission_level < 1 and current_user.id != user.id:
         flash("You can't view other's dashboard!", category="error")
         return redirect(url_for("views.dashboard", username=current_user.username))
+    
+    url = "https://zenquotes.io/api/random"
+    response = requests.get(url)
+    a = response.json()[0]
 
-    return render_template("dashboard.html", current_user=current_user, user=user, hobbies=user.hobbies, dailies=user.dailies, tickets=user.tickets)
+    return render_template("dashboard.html", current_user=current_user, user=user, hobbies=user.hobbies, dailies=user.dailies, tickets=user.tickets, quote=a["q"], author=a["a"])
 
 @views.route("/toggle-daily/<id>", methods=["POST"])
 @login_required
