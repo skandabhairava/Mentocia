@@ -42,11 +42,13 @@ def create_app():
     def load_user(id):
         return User.query.get(int(id))
 
+    def resettt():
+        reset_daily(app)
+
     from apscheduler.schedulers.background import BackgroundScheduler
     scheduler = BackgroundScheduler()
-    scheduler.add_job(func=reset_daily, trigger="interval", seconds=8600)
+    scheduler.add_job(func=resettt, trigger="interval", seconds=86400)
     scheduler.start()
-
 
     return app
 
@@ -56,16 +58,23 @@ def create_database(app):
         db.create_all(app=app)
         print("Created database")
 
-def reset_daily():
-    print("removing all check items")
-    from .models import Daily, Hobby
-    dailies = Daily.query.all()
-    hobbies = Hobby.query.all()
+def reset_daily(app):
+    print("removing all checked items")
+    with app.app_context():
+        from .models import Daily, Hobby
+        dailies = Daily.query.all()
+        hobbies = Hobby.query.all()
 
-    for daily in dailies:
-        daily.checked = False
-        db.session.commit()
+        for daily in dailies:
+            if daily.checked == True:
+                #print("Daily was actually checked\n\n\n")
+                daily.checked = False
+            db.session.commit()
 
-    for hobby in hobbies:
-        hobby.checked = False
-        db.session.commit()
+        for hobby in hobbies:
+            if hobby.checked == True:
+                #print("Hobby was actually checked\n\n\n")
+                hobby.checked = False
+            db.session.commit()
+
+    print("Done removing all checked items")
