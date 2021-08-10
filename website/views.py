@@ -142,7 +142,7 @@ def dashboard(username):
 
     return render_template("dashboard.html", current_user=current_user, hobbies=user.hobbies, dailies=user.dailies, tickets=user.tickets)
 
-@views.route("/toggle-daily/<id>")
+@views.route("/toggle-daily/<id>", methods=["POST"])
 @login_required
 def toggle_daily(id):
     daily = Daily.query.filter_by(id=id).first()
@@ -170,7 +170,7 @@ def toggle_daily(id):
 
     return redirect(url_for("views.dashboard", username=user.username))
 
-@views.route("/toggle-hobby/<id>")
+@views.route("/toggle-hobby/<id>", methods=["POST"])
 @login_required
 def toggle_hobby(id):
     hobby = Hobby.query.filter_by(id=id).first()
