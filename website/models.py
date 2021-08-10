@@ -16,15 +16,16 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150), nullable=False)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     tickets = db.Column(db.Integer, nullable=False, default=0)
-    habits = db.relationship("Habit", backref='user', passive_deletes=True)
+    hobbies = db.relationship("Habit", backref='user', passive_deletes=True)
     dailies = db.relationship("Daily", backref='user', passive_deletes=True)
 
-class Habit(db.Model):
+class Hobby(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     text = db.Column(db.String(50), unique=True, nullable=False)
     price = db.Column(db.Integer, nullable=False, default=0)
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    checked = db.Column(db.Boolean, nullable=False, default=False)
 
 class Daily(db.Model):
     id = db.Column(db.Integer, primary_key=True)
