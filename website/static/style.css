@@ -35,7 +35,7 @@
 }
 
 .form-group{
-    background-color: #858585;
+    background-color: #6640a3;
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     width: 500px;
@@ -73,3 +73,8 @@
         padding: 10px;
     }
   }
+
+body {
+    background-image: url("/static/background.svg");
+    background-size: 100% auto;
+}
