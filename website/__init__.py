@@ -5,6 +5,7 @@ from flask_login import LoginManager, current_user
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from werkzeug.security import generate_password_hash
+import datetime
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
@@ -46,8 +47,11 @@ def create_app():
         reset_daily(app)
 
     from apscheduler.schedulers.background import BackgroundScheduler
+
+    today = datetime.datetime.now()
+    start_time = datetime.datetime(year=today.year, month=today.month, day=today.day, hour=23, minute=59, second=0)
     scheduler = BackgroundScheduler()
-    scheduler.add_job(func=resettt, trigger="interval", seconds=86400)
+    scheduler.add_job(func=resettt, trigger="interval", hours=24, start_date=start_time)
     scheduler.start()
 
     return app
