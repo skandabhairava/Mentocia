@@ -44,7 +44,7 @@ def create_app():
 
     from apscheduler.schedulers.background import BackgroundScheduler
     scheduler = BackgroundScheduler()
-    scheduler.add_job(func=reset_daily, trigger="interval", seconds=86400)
+    scheduler.add_job(func=reset_daily, trigger="interval", seconds=8600)
     scheduler.start()
 
 
@@ -57,6 +57,7 @@ def create_database(app):
         print("Created database")
 
 def reset_daily():
+    print("removing all check items")
     from .models import Daily, Hobby
     dailies = Daily.query.all()
     hobbies = Hobby.query.all()

@@ -18,7 +18,7 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="/home">Home</a>
-                    {% if user.is_authenticated %}
+                    {% if current_user.is_authenticated %}
                         <a class="nav-item nav-link" href="/logout">Logout</a>
                     {% else %}
                         <a class="nav-item nav-link" href="/login">Login</a>
@@ -26,7 +26,7 @@
                     {% endif %}
                 </div>
             </div>
-            {% if user.is_authenticated %}
+            {% if current_user.is_authenticated %}
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-item nav-link navbar-nav pull-right" href="/create-post">Create Post</a>
