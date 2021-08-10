@@ -9,7 +9,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 auth = Blueprint("auth", __name__)
 
 
-
 @auth.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
@@ -59,7 +58,6 @@ def sign_up():
     if request.method == 'POST':
         email = request.form.get("email")
         username = request.form.get("username")
-        nickname = request.form.get("nickname")
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
 
@@ -79,14 +77,12 @@ def sign_up():
             flash('Invalid Email', category="error")
         elif _validate_username(username):  
             flash('Invalid Username', category="error")
-        elif _checkstring(nickname, ";:'\".,\\/"):
-            flash('Invalid Nickname', category="error")
         else:  
-            new_user = User(email=email, username=username.lower(), nick_name=nickname, password=generate_password_hash(password1, method='sha256'))
+            new_user = User(email=email, username=username.lower(), password=generate_password_hash(password1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True) # ONLY USE IF U WANT TO LOGIN IMMEDIATELY AFTER SIGNING UP
-            flash("User created!", category="success")  
+            flash("User Account created!", category="success")  
             return redirect(url_for("views.home"))
 
     return render_template("signup.html", user=current_user)

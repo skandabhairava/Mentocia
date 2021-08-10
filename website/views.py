@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Post, User, Comment
+from .models import User, Habit, Daily
 from . import db
 
 views = Blueprint("views", __name__)
@@ -9,10 +9,9 @@ views = Blueprint("views", __name__)
 @views.route("/home")
 @login_required
 def home():
-    posts = Post.query.all()[::-1]
-    return render_template("home.html", user=current_user, posts=posts)
+    return render_template("home.html", user=current_user)
 
-@views.route("/create-post", methods=["GET", "POST"])
+@views.route("/create-post", methods=["POST"])
 @login_required
 def create_post():
 
