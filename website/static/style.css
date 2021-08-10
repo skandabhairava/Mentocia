@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap');
+
+.nav-item{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 200;
+    color: white;
+}
+
+.submain-1{
+    padding-top: 6rem;
+    padding-left: 10rem;
+    padding-right: 10rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 1.4rem;
+}
+
+.dashboard-btn{
+    background: #222527;
+    width: 180px;
+    padding: 10px 10px;
+    color: white;
+    border-radius: 0.9rem;
+    border-style: none;
+    transition-duration: 0.4s;
+    text-decoration: none;
+    margin-top: 3rem;
+
+}
+
+.dashboard-btn:hover{
+    color: rgb(187, 187, 187);
+    text-decoration: none;
+}
+
+@media screen and (max-width: 200px) {
+    .submain-1{
+        font-size: 0.4rem;
+    }
+  }
