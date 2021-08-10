@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from .models import User, Hobby, Daily
 from . import db
+import requests
 
 views = Blueprint("views", __name__)
 
@@ -25,7 +26,10 @@ def home():
     """
     Main homepage of the website
     """
-    return render_template("home.html", current_user=current_user)
+    url = "https://zenquotes.io/api/random"
+    response = requests.get(url)
+    a = response.json()[0]
+    return render_template("home.html", current_user=current_user, quote=a["q"], author=["a"])
 
 @views.route("/create-hobby/<username>", methods=["POST"])
 @login_required
