@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150), nullable=False)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     tickets = db.Column(db.Integer, nullable=False, default=0)
-    hobbies = db.relationship("Habit", backref='user', passive_deletes=True)
+    hobbies = db.relationship("Hobby", backref='user', passive_deletes=True)
     dailies = db.relationship("Daily", backref='user', passive_deletes=True)
 
 class Hobby(db.Model):
