@@ -282,6 +282,60 @@ def redeem_20(username):
 
     return redirect(url_for("views.dashboard", username=user.username))
 
+@views.route("/healthofficial/<username>")
+@login_required
+def health_verify(username):
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        flash("user doesn't exist", category="error")
+        return redirect(url_for("views.dashboard", username=current_user.username))
+    elif current_user.permission_level < 2 and current_user.id != user.id:
+        flash("You do not have permission to change others permission level!", category="error")
+        return redirect(url_for("views.dashboard", username=current_user.username))
+    else:
+        user.permission_level = 1
+        db.session.commit()
+        flash("Health verified!", category="success")
+
+    return redirect(url_for("views.dashboard", username=user.username))
+
+@views.route("/adminverify/<username>")
+@login_required
+def admin_verify(username):
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        flash("user doesn't exist", category="error")
+        return redirect(url_for("views.dashboard", username=current_user.username))
+    elif current_user.permission_level < 2 and current_user.id != user.id:
+        flash("You do not have permission to change others permission level!", category="error")
+        return redirect(url_for("views.dashboard", username=current_user.username))
+    else:
+        user.permission_level = 2
+        db.session.commit()
+        flash("Admin verified!", category="success")
+
+    return redirect(url_for("views.dashboard", username=user.username))
+
+@views.route("/normaluser/<username>")
+@login_required
+def normal_verify(username):
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        flash("user doesn't exist", category="error")
+        return redirect(url_for("views.dashboard", username=current_user.username))
+    elif current_user.permission_level < 2 and current_user.id != user.id:
+        flash("You do not have permission to change others permission level!", category="error")
+        return redirect(url_for("views.dashboard", username=current_user.username))
+    else:
+        user.permission_level = 0
+        db.session.commit()
+        flash("Made a normal user!", category="success")
+
+    return redirect(url_for("views.dashboard", username=user.username))
+
 ##############################################################
 ## FLASK VIEWS FOR FORUM
 ##############################################################

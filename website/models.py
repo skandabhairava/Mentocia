@@ -32,7 +32,7 @@ class Hobby(db.Model):
 class Daily(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
-    text = db.Column(db.String(50), unique=True, nullable=False)
+    text = db.Column(db.String(50), nullable=False)
     price = db.Column(db.Integer, nullable=False, default=8)
     checked = db.Column(db.Boolean, nullable=False, default=False)
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)

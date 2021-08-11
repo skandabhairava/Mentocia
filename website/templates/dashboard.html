@@ -6,6 +6,22 @@
             {{user.username}}
             <p class="motivational">"{{quote}}" - {{author}}</p>
             <p class="tickets">tickets: {{user.tickets}}</p>
+            {% if current_user.permission_level > 1 %}
+            <div>
+                <div style="float: left;">
+                    <button class="btn btn-primary" onclick="location.href='/healthofficial/{{user.username}}'">Verify Doctor</button>
+                </div>
+                <div style="float: left;">
+                    
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary" onclick="location.href='/normaluser/{{user.username}}'">Normal User</button>
+                    
+                </div>
+                <div style="float: right;">
+                    <button class="btn btn-primary" onclick="location.href='/adminverify/{{user.username}}'">Verify Admin</button>
+                </div>
+            </div>
+            <br/>
+            {% endif %}
         </h1>
         <br/>
         <div class="flexbox-main">
