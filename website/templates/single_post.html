@@ -27,7 +27,7 @@
         </div>
         <div align="right" style="float:right;">
         {{post.date_created}}
-        {% if current_user.id == post.author %}
+        {% if current_user.id == post.author or current_user.permission_level > 1 %}
         <div class="btn-group">
             <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
             <ul class="dropdown-menu">
@@ -82,7 +82,7 @@
                             <p>&emsp;{{comment.text}}</p>
                         </div>
                     </div>
-                    {% if current_user.id == comment.author %}
+                    {% if current_user.id == comment.author or current_user.permission_level > 1 %}
                         <div style="float: right;" class="btn-group dropdown">
                             <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
                             <ul class="dropdown-menu">
