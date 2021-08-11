@@ -10,7 +10,7 @@ html{
 body {
     background: rgb(103,56,255);
     background: linear-gradient(27deg, rgba(103,56,255,1) 0%, rgba(203,187,255,1) 47%, rgba(255,255,255,1) 100%);
-    /*background-repeat: no-repeat;*/
+    background-repeat: repeat;
     height: 100vh;
     background-attachment: fixed;
 }
@@ -26,6 +26,7 @@ nav{
     left: 50%;
     transform: translate(-50%, -50%);
     padding-bottom: 50px;
+    box-shadow: 8px 8px 3px grey;
 }
 
 .nav-item{
@@ -50,6 +51,7 @@ nav{
     font-size: 1.4rem;
     border-radius: 10px;
     background-color: white;
+    box-shadow: 8px 8px 3px grey;
 }
 
 .motivational{
@@ -68,6 +70,7 @@ nav{
     font-size: 1.4rem;
     border-radius: 10px;
     background-color: white;
+    box-shadow: 8px 8px 3px grey;
 }
 
 .dashboard-btn{
@@ -135,6 +138,25 @@ nav{
     padding:1rem;
 }
 
+#posts{
+    height: auto;
+    margin-top: auto;
+    width: 800px;
+    background-color: white;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 13px;
+    box-shadow: 8px 8px 3px grey;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.card-title{
+    font-weight: 400;
+    font-size: 1.3rem;
+}
 
 @media screen and (max-width: 200px) {
     .submain-1{
