@@ -274,7 +274,7 @@ def redeem_20(username):
         flash("You do not have permission to change others hobby!", category="error")
         return redirect(url_for("views.dashboard", username=current_user.username))
     if user.tickets < 20:
-        flash("You have less than 8 tickets in your account!", category="error")
+        flash("You have less than 20 tickets in your account!", category="error")
     else:
         user.tickets -= 20
         db.session.commit()
