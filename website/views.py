@@ -164,6 +164,22 @@ def dashboard(username):
 
     return render_template("dashboard.html", current_user=current_user, user=user, hobbies=user.hobbies, dailies=user.dailies, tickets=user.tickets, quote=a["q"], author=a["a"], posts=posts)
 
+@views.route("/posts/<username>")
+@login_required
+def user_posts(username):
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        flash("No user with that username exists!", category="error")
+        return redirect(url_for("views.home"))
+    elif current_user.permission_level < 1 and current_user.id != user.id:
+        flash("You can't view other's posts!", category="error")
+        return redirect(url_for("views.dashboard", username=current_user.username))
+    
+    posts = user.posts[::-1]
+
+    return render_template("post_div.html", current_user=current_user, posts=posts)
+
 @views.route("/toggle-daily/<id>")
 @login_required
 def toggle_daily(id):

@@ -20,7 +20,7 @@ nav{
 
 .main{
     position: absolute;
-    top: 550px;
+    top: 600px;
     left: 50%;
     transform: translate(-50%, -50%);
     padding-bottom: 50px;
