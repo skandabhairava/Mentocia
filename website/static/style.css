@@ -158,6 +158,11 @@ nav{
     font-size: 1.3rem;
 }
 
+.dash-btn{
+    margin-left: 20px;
+}
+
+
 @media screen and (max-width: 200px) {
     .submain-1{
         font-size: 0.4rem;

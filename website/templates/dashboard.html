@@ -23,7 +23,7 @@
                             {% if daily.checked == True %}
                             checked="checked"
                             {% endif %}
-                            ><span class="list-text col col-2">{{daily.text}}</span><span class="prize col col-3">🏆{{daily.price}}🏆</span><a href="/delete-daily/{{daily.id}}" class="col col-4"><button class="btn btn-primary">Delete</button></a></li>
+                            ><span class="list-text">{{daily.text}}</span><span class="prize">🏆{{daily.price}}</span><a href="/delete-daily/{{daily.id}}"><button class="btn btn-primary dash-btn">Delete</button></a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -43,7 +43,7 @@
                             {% if hobby.checked == True %}
                             checked="checked"
                             {% endif %}
-                            ><span class="list-text">{{hobby.text}}</span><span class="prize">🏆{{hobby.price}}🏆</span><a href="/delete-hobby/{{hobby.id}}"><button class="btn btn-primary">Delete</button></a></li>
+                            ><span class="list-text">{{hobby.text}}</span><span class="prize">🏆{{hobby.price}}</span><a href="/delete-hobby/{{hobby.id}}"><button class="btn btn-primary dash-btn">Delete</button></a></li>
                         {% endfor %}
                     </ul>
                 </div>
