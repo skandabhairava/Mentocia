@@ -20,13 +20,11 @@ nav{
 }
 
 .main{
-    margin-top: 10%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     padding-bottom: 50px;
-    box-shadow: 8px 8px 3px grey;
 }
 
 .nav-item{
