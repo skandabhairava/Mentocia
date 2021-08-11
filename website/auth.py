@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from sqlalchemy.sql.functions import user
 from . import db
-from .models import User
+from .models import User, Daily
 import re
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -82,7 +82,19 @@ def sign_up():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True) # ONLY USE IF U WANT TO LOGIN IMMEDIATELY AFTER SIGNING UP
-            flash("User Account created!", category="success")  
+            flash("User Account created!", category="success")
+            get_user = User.query.filter_by(username=username).first()
+            daily_1 = Daily(text="Get plenty of sleep", price=8, author=get_user.id)
+            daily_2 = Daily(text="10 min of exercise", price=8, author=get_user.id)
+            daily_3 = Daily(text="3 liters of water", price=8, author=get_user.id)
+            daily_4 = Daily(text="meditate for 2 min", price=8, author=get_user.id)
+            daily_5 = Daily(text="eat healthy food", price=8, author=get_user.id)
+            db.session.add(daily_1)
+            db.session.add(daily_2)
+            db.session.add(daily_3)
+            db.session.add(daily_4)
+            db.session.add(daily_5)
+            db.session.commit()
             return redirect(url_for("views.home"))
 
     return render_template("signup.html", user=current_user)

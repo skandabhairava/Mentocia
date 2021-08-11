@@ -12,6 +12,7 @@ body {
     background: linear-gradient(27deg, rgba(103,56,255,1) 0%, rgba(203,187,255,1) 47%, rgba(255,255,255,1) 100%);
     /*background-repeat: no-repeat;*/
     height: 100vh;
+    background-attachment: fixed;
 }
 
 nav{
@@ -19,11 +20,12 @@ nav{
 }
 
 .main{
-    margin-top: 2rem;
+    margin-top: 10%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    padding-bottom: 50px;
 }
 
 .nav-item{
@@ -145,4 +147,3 @@ nav{
         padding: 10px;
     }
   }
-

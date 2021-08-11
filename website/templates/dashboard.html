@@ -17,13 +17,13 @@
                             +
                         </button>
                     </form>
-                    <ul class="card-item">
+                    <ul class="card-item responsive-table">
                         {% for daily in dailies %}
-                        <li><input type="checkbox" id="check" class="daily-check" dailyid={{daily.id}}
+                        <li class="table-rows"><input type="checkbox" id="check" class="daily-check col col-1" dailyid={{daily.id}}
                             {% if daily.checked == True %}
                             checked="checked"
                             {% endif %}
-                            ><span class="list-text">{{daily.text}}</span><span class="prize">🏆{{daily.price}}🏆</span><a href="/delete-daily/{{daily.id}}"><button class="btn btn-primary">Delete</button></a></li>
+                            ><span class="list-text col col-2">{{daily.text}}</span><span class="prize col col-3">🏆{{daily.price}}🏆</span><a href="/delete-daily/{{daily.id}}" class="col col-4"><button class="btn btn-primary">Delete</button></a></li>
                         {% endfor %}
                     </ul>
                 </div>
