@@ -226,6 +226,46 @@ def toggle_hobby(id):
 
     return redirect(url_for("views.dashboard", username=user.username))
 
+@views.route("/redeem-8/<username>")
+@login_required
+def redeem_8(username):
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        flash("user doesn't exist", category="error")
+        return redirect(url_for("views.dashboard", username=current_user.username))
+    if current_user.permission_level < 2 and current_user.id != user.id:
+        flash("You do not have permission to change others hobby!", category="error")
+        return redirect(url_for("views.dashboard", username=current_user.username))
+    if user.tickets < 8:
+        flash("You have less than 8 tickets in your account!", category="error")
+    else:
+        user.tickets -= 8
+        db.session.commit()
+        flash("Good job!!\nTreat yourself by having a chocolate!", category="success")
+
+    return redirect(url_for("views.dashboard", username=user.username))
+
+@views.route("/redeem-20/<username>")
+@login_required
+def redeem_20(username):
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        flash("user doesn't exist", category="error")
+        return redirect(url_for("views.dashboard", username=current_user.username))
+    if current_user.permission_level < 2 and current_user.id != user.id:
+        flash("You do not have permission to change others hobby!", category="error")
+        return redirect(url_for("views.dashboard", username=current_user.username))
+    if user.tickets < 20:
+        flash("You have less than 8 tickets in your account!", category="error")
+    else:
+        user.tickets -= 20
+        db.session.commit()
+        flash("Good job!!\nTreat yourself by taking a 2hr break!", category="success")
+
+    return redirect(url_for("views.dashboard", username=user.username))
+
 ##############################################################
 ## FLASK VIEWS FOR FORUM
 ##############################################################

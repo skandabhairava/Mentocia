@@ -11,7 +11,19 @@
     </div>
     <div class="card-footer text-muted" style="height: 3;">
         <div align="left" style="float:left;">
-            <a href="/user/{{post.user.username}}/posts">{{post.user.username}}</a>
+            {% if current_user.permission_level > 0 %}
+                {% if post.user.permission_level > 0 %}
+                <a href="/dashboard/{{post.user.username}}">{{post.user.username}}<img src="https://img.icons8.com/material-outlined/24/26e07f/approval.png"/></a>
+                {% else %}
+                <a href="/dashboard/{{post.user.username}}">{{post.user.username}}</a>
+                {% endif %}
+            {% else %}
+                {% if post.user.permission_level > 0 %}
+                <a href="/dashboard/{{post.user.username}}">{{post.user.username}}<img src="https://img.icons8.com/material-outlined/24/26e07f/approval.png"/></a>
+                {% else %}
+                <a href="/dashboard/{{post.user.username}}">{{post.user.username}}</a>
+                {% endif %}
+            {% endif %}
         </div>
         <div align="right" style="float:right;">
         {{post.date_created}}
@@ -37,10 +49,10 @@
                 <li class="list-group-item p-3">
                     <form method="POST" class="mb-3" action="/create-comment/{{post.id}}">
                         <div>
-                            <textarea class="form-control d-flex autoresizing" maxlength="200" wrap="off" name="text" id="text" placeholder="Leave a comment here" style="height: 100px; display: block; overflow: hidden; resize: none;"></textarea>
+                            <textarea class="form-control d-flex autoresizing" maxlength="50" wrap="off" name="text" id="text" placeholder="Leave a comment here" style="height: 100px; display: block; overflow: hidden; resize: none;"></textarea>
                         </div>
                         <div align="right">
-                            <label class="text-max-len text-muted">500 / 500</label>
+                            <label class="text-max-len text-muted">50 / 50</label>
                         </div>
                         <br/>
                         <div align="right">
@@ -52,7 +64,19 @@
                 <li class="list-group-item">
                     <div style="float: left;">
                         <div>
-                            <a href="/user/{{post.user.username}}/posts">{{comment.user.username}}</a>
+                            {% if current_user.permission_level > 0 %}
+                                {% if post.user.permission_level > 0 %}
+                                <a href="/dashboard/{{comment.user.username}}">{{comment.user.username}}<img src="https://img.icons8.com/material-outlined/24/26e07f/approval.png"/></a>
+                                {% else %}
+                                <a href="/dashboard/{{comment.user.username}}">{{comment.user.username}}</a>
+                                {% endif %}
+                            {% else %}
+                                {% if post.user.permission_level > 0 %}
+                                <a href="/dashboard/{{comment.user.username}}">{{comment.user.username}}<img src="https://img.icons8.com/material-outlined/24/26e07f/approval.png"/></a>
+                                {% else %}
+                                <a href="/dashboard/{{comment.user.username}}">{{comment.user.username}}</a>
+                                {% endif %}
+                            {% endif %}
                         </div>
                         <div>
                             <p>&emsp;{{comment.text}}</p>

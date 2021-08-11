@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<h1 align="center" style="z-index: 80;">{% block header %}Posts{% endblock %}</h1>
-<div id="posts" style="z-index: 50;">
+<h1 align="center" style="z-index: 100;">Posts</h1>
+<div id="posts" style="z-index: 80;">
 {% for post in posts %}
 <div class="card border-dark post_color">
     <div class="card-body" style="transform: rotate(0);">
@@ -12,9 +12,17 @@
     <div class="card-footer text-muted" style="height: 3;">
         <div align="left" style="float:left;">
             {% if current_user.permission_level > 0 %}
-            <a href="/dashboard/{{post.user.username}}">{{post.user.username}}</a>
+                {% if post.user.permission_level > 0 %}
+                <a href="/dashboard/{{post.user.username}}">{{post.user.username}}<img src="https://img.icons8.com/material-outlined/24/26e07f/approval.png"/></a>
+                {% else %}
+                <a href="/dashboard/{{post.user.username}}">{{post.user.username}}</a>
+                {% endif %}
             {% else %}
-            <a href="#">{{post.user.username}}</a>
+                {% if post.user.permission_level > 0 %}
+                <a href="/dashboard/{{post.user.username}}">{{post.user.username}}<img src="https://img.icons8.com/material-outlined/24/26e07f/approval.png"/></a>
+                {% else %}
+                <a href="/dashboard/{{post.user.username}}">{{post.user.username}}</a>
+                {% endif %}
             {% endif %}
         </div>
         <div align="right" style="float:right;">

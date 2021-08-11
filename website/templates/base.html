@@ -20,6 +20,7 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link" href="/home">Home</a>
                     {% if current_user.is_authenticated %}
+                        <a class="nav-item nav-link" href="/forum">Forum</a>
                         <a class="nav-item nav-link" href="/logout">Logout</a>
                     {% else %}
                         <a class="nav-item nav-link" href="/login">Login</a>
@@ -39,9 +40,9 @@
             {% endif %}
         </div>
     </nav>
-    <div class="container" style="z-index: 80;">{% block content %}{% endblock %}</div>
+    <div class="container" style="z-index: 20;">{% block content %}{% endblock %}</div>
     <br/>
-    <div aria-live="polite" aria-atomic="true" class="position-relative">
+    <div aria-live="polite" aria-atomic="true" class="position-relative" style="z-index: 1000;">
         <!-- Position it: -->
         <!-- - `.toast-container` for spacing between toasts -->
         <!-- - `.position-absolute`, `top-0` & `end-0` to position the toasts in the upper right corner -->
@@ -139,6 +140,9 @@
             if(!this.checked) {
                 window.location.href = "/toggle-hobby/" + $(this).attr('hobbyid');
             }
+        });
+        $( "#smol" ).click(function() {
+            console.log("good")
         });
     </script>
 

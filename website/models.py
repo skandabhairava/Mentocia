@@ -43,10 +43,12 @@ class Post(db.Model):
     text = db.Column(db.String(50), nullable=False)
     severity = db.Column(db.Boolean, nullable=False, default=False)
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    comments = db.relationship("Comment", backref='post', passive_deletes=True)
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     text = db.Column(db.String(50), nullable=False)
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete="CASCADE"), nullable=False)
 
