@@ -243,7 +243,7 @@ def forum():
 def create_post():
     if request.method == "POST":
         text = request.form.get('text')
-        severity = request.form.get('severity')
+        severity = request.form.get('range')
         if not text:
             flash("Post cannot be empty!", category="error")
         elif not severity:

@@ -8,14 +8,21 @@
         <h1 class="card-title">Make a new Post</h1>
         <form method="POST">
             <div class="mb-3">
-                <label for="title" class="form-label">Title of post</label>
-                <input name="title" type="text" class="form-control" id="title" placeholder="Title">
-            </div>
-            <div class="mb-3">
                 <label for="text" class="form-label">Text</label>
                 <textarea wrap="off" name="text" id="text" class="form-control d-flex autoresizing" rows="5" style="width: 96%; display: block; overflow: hidden; resize: none;"></textarea>
             </div>
             <br />
+            <div class="mb-3">
+                <div class="column-left">
+                    Friendly Post
+                </div>
+                <div class="column-center">
+                    <input type="range" class="form-range" name="range" min="0" max="1" step="1" id="customRange" value="0" style="width: 50%;">
+                </div>
+                <div class="column-right">
+                    Serious
+                </div>
+            </div>
             <div align="right">
                 <button type="submit" class="btn btn-lg btn-primary">Post</button>
             </div>
