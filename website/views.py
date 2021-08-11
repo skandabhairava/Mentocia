@@ -160,8 +160,9 @@ def dashboard(username):
     url = "https://zenquotes.io/api/random"
     response = requests.get(url)
     a = response.json()[0]
+    posts = user.posts[::-1]
 
-    return render_template("dashboard.html", current_user=current_user, user=user, hobbies=user.hobbies, dailies=user.dailies, tickets=user.tickets, quote=a["q"], author=a["a"])
+    return render_template("dashboard.html", current_user=current_user, user=user, hobbies=user.hobbies, dailies=user.dailies, tickets=user.tickets, quote=a["q"], author=a["a"], posts=posts)
 
 @views.route("/toggle-daily/<id>")
 @login_required

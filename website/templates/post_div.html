@@ -2,7 +2,8 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 <h1 align="center">{% block header %}Posts{% endblock %}</h1>
-<div class="card border-dark" id="posts">
+<div id="posts">
+<div class="card border-dark post_color">
     <div class="card-body" style="transform: rotate(0);">
         <div class="card-text"><h6 class="card-text">TEXT</h6></div>
         <a href="/post/ID" class="stretched-link" style="z-index: 0;"></a>
@@ -24,28 +25,8 @@
     </div>
 </div>
 <br/>
-<div class="card border-dark" id="posts">
-    <div class="card-body" style="transform: rotate(0);">
-        <div class="card-text"><h6 class="card-text">TEXT</h6></div>
-        <a href="/post/ID" class="stretched-link" style="z-index: 0;"></a>
-    </div>
-    <div class="card-footer text-muted" style="height: 3;">
-        <div align="left" style="float:left;">
-            <a href="/user/USERNAME/posts">USERNAME</a>
-        </div>
-        <div align="right" style="float:right;">
-        
-        <div class="btn-group dropdown">
-            <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
-            <ul class="dropdown-menu">
-                <li><a href="/delete-post/ID" class="dropdown-item">Delete</a></li>
-            </ul>
-        </div>
-
-        </div>
-    </div>
+{% endfor %}
 </div>
-<br/>
 {% block footer %}
 {% endblock %}
 {% endblock %}

@@ -15,7 +15,7 @@
         </div>
         <div align="right" style="float:right;">
         {{post.date_created}}
-        {% if user.id == post.author %}
+        {% if current_user.id == post.author %}
         <div class="btn-group">
             <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
             <ul class="dropdown-menu">
@@ -58,7 +58,7 @@
                             <p>&emsp;{{comment.text}}</p>
                         </div>
                     </div>
-                    {% if user.id == comment.author %}
+                    {% if current_user.id == comment.author %}
                         <div style="float: right;" class="btn-group dropdown">
                             <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
                             <ul class="dropdown-menu">
