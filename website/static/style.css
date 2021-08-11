@@ -11,7 +11,7 @@ body {
     background: rgb(103,56,255);
     background: linear-gradient(27deg, rgba(103,56,255,1) 0%, rgba(203,187,255,1) 47%, rgba(255,255,255,1) 100%);
     background-repeat: repeat;
-    height: 100vh;
+
     background-attachment: fixed;
 }
 
@@ -21,7 +21,7 @@ nav{
 
 .main{
     position: absolute;
-    top: 50%;
+    top: 500px;
     left: 50%;
     transform: translate(-50%, -50%);
     padding-bottom: 50px;
@@ -138,7 +138,7 @@ nav{
 
 #posts{
     height: auto;
-    margin-top: auto;
+    margin-top: 15px;
     width: 800px;
     
 

@@ -233,8 +233,8 @@ def toggle_hobby(id):
 @views.route("/forum")
 @login_required
 def forum():
-    if current_user.permission_level == 1:
-        posts = Post.query.filter(Post.severity != False).all()[::-1]
+    if current_user.permission_level != 1:
+        posts = Post.query.filter(Post.severity != True).all()[::-1]
     else:
         posts = Post.query.all()[::-1]
     return render_template("post_div.html", current_user=current_user, posts=posts)
@@ -275,7 +275,7 @@ def delete_post(id):
         db.session.commit()
         flash("Post has been deleted successfully!", category="success")
     
-    return redirect(url_for("views.home"))
+    return redirect(url_for("views.forum"))
 
 @views.route("/create-comment/<id>", methods=['POST'])
 @login_required

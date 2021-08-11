@@ -95,7 +95,7 @@ def sign_up():
             db.session.add(daily_4)
             db.session.add(daily_5)
             db.session.commit()
-            return redirect(url_for("views.home"))
+            return redirect(url_for("views.dashboard", username=current_user.username))
 
     return render_template("signup.html", user=current_user)
 

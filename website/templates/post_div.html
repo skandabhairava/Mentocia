@@ -1,26 +1,31 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<h1 align="center">{% block header %}Posts{% endblock %}</h1>
-<div id="posts">
+<h1 align="center" style="z-index: 80;">{% block header %}Posts{% endblock %}</h1>
+<div id="posts" style="z-index: 50;">
+{% for post in posts %}
 <div class="card border-dark post_color">
     <div class="card-body" style="transform: rotate(0);">
-        <div class="card-text"><h6 class="card-text">TEXT</h6></div>
-        <a href="/post/ID" class="stretched-link" style="z-index: 0;"></a>
+        <div class="card-text"><h6 class="card-text">{{post.text}}</h6></div>
+        <a href="/post/{{post.id}}" class="stretched-link" style="z-index: 0;"></a>
     </div>
     <div class="card-footer text-muted" style="height: 3;">
         <div align="left" style="float:left;">
-            <a href="/user/USERNAME/posts">USERNAME</a>
+            {% if current_user.permission_level > 0 %}
+            <a href="/dashboard/{{post.user.username}}">{{post.user.username}}</a>
+            {% else %}
+            <a href="#">{{post.user.username}}</a>
+            {% endif %}
         </div>
         <div align="right" style="float:right;">
-        
+        {% if current_user.id == post.author %}
         <div class="btn-group dropdown">
             <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
             <ul class="dropdown-menu">
-                <li><a href="/delete-post/ID" class="dropdown-item">Delete</a></li>
+                <li><a href="/delete-post/{{post.id}}" class="dropdown-item">Delete</a></li>
             </ul>
         </div>
-
+        {% endif %}
         </div>
     </div>
 </div>
